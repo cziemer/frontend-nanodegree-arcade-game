@@ -1,3 +1,13 @@
+//Define the Rows and Columns
+    var row = [];
+    var col = [];
+    for (i = 1; i <= 6; i++) {
+	    row[i] = -10 + (83 * (i-1));
+    }
+    for (i = 0; i <= 6; i++) {
+	    col[i] = 101 * i;
+    }
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -6,9 +16,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 101;
+    this.x = -101;
     this.y = 239;
-    this.speed = 25;
+    this.speed = 50;
 }
 
 // Update the enemy's position, required method for game
@@ -17,6 +27,12 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    if (this.x < col[6]) {
+    	this.x += this.speed * dt;
+	}
+	else {
+		this.x = -101;
+	}
 }
 
 // Draw the enemy on the screen, required method for game
@@ -50,16 +66,17 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-	if (direction === 'up') {
+	console.log(this.y);
+	if (direction === 'up' && this.y > row[1]) {
 		this.y -= 83;
 	}
-	else if (direction === 'down') {
+	else if (direction === 'down' && this.y < row[6]) {
 		this.y += 83;
 	}
-	else if (direction === 'left') {
+	else if (direction === 'left' && this.x > col[0]) {
 		this.x -= 101;
 	}
-	else if (direction === 'right') {
+	else if (direction === 'right' && this.x < col[4]) {
 		this.x += 101;
 	}
 }

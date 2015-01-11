@@ -29,10 +29,6 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
-    
-    
-    
-    
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -85,9 +81,32 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
+    /* This is called by the update function  and loops through all of the
+     * objects within your allEnemies array as defined in app.js and checks
+     * their location versus the player. If the player and an enemy occupy
+     * the same space, the player goes back to the bottom row.
+     */
+    function checkCollisions(){
+	    var pRow = ((player.y + 20) / rowHeight) + 1;
+	    var eRow;
+	    var eStart;
+	    var eEnd;
+	    for (var i = 0; i < allEnemies.length; i++) {
+		    eRow = ((allEnemies[i].y + 20) / rowHeight) + 1;
+		    if (pRow === eRow) {
+				   eStart = allEnemies[i].x;
+				   eEnd = eStart + colWidth;
+				   if ((eEnd >= player.x + buffer) && (eStart <= player.x + colWidth - buffer)){
+					   player.init();
+				   }
+		    }
+		    
+	    }
+    }
+    
     /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -141,8 +160,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
         renderEntities();
     }
 

@@ -1,12 +1,22 @@
-//Define the Rows and Columns
+/* Define Necessary Global variables and Constants
+ */
+	var rowHeight = 83;
+	var colWidth = 101;
+ 
+ //Define the Rows and Columns
     var row = [];
     var col = [];
     for (i = 1; i <= 6; i++) {
-	    row[i] = -10 + (83 * (i-1));
+	    row[i] = -20 + (rowHeight * (i-1));
     }
     for (i = 0; i <= 6; i++) {
-	    col[i] = 101 * i;
+	    col[i] = colWidth * (i-1);
     }
+
+//Return a random number between two values  
+function randomIntFromInterval(min,max) {
+	return Math.floor(Math.random()*(max-min+1)+min);
+}
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -16,9 +26,10 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -101;
-    this.y = 239;
-    this.speed = 50;
+    this.x = randomIntFromInterval(col[0],col[5]);
+    this.y = row[randomIntFromInterval(2,4)];
+    this.speed = randomIntFromInterval(40,85);
+    //this.speed = 300;
 }
 
 // Update the enemy's position, required method for game
@@ -31,7 +42,8 @@ Enemy.prototype.update = function(dt) {
     	this.x += this.speed * dt;
 	}
 	else {
-		this.x = -101;
+		this.x = col[0];
+		this.y = row[randomIntFromInterval(2,4)];
 	}
 }
 
@@ -47,8 +59,8 @@ Enemy.prototype.render = function() {
 // The Player character
 var Player = function () {
 	this.sprite = 'images/char-boy.png';
-	this.x = 101;
-    this.y = 405;
+	this.x = col[randomIntFromInterval(1,5)];
+    this.y = row[6];
 }
 
 // Update the players's position, required method for game
@@ -66,18 +78,17 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-	console.log(this.y);
 	if (direction === 'up' && this.y > row[1]) {
-		this.y -= 83;
+		this.y -= rowHeight;
 	}
 	else if (direction === 'down' && this.y < row[6]) {
-		this.y += 83;
+		this.y += rowHeight;
 	}
-	else if (direction === 'left' && this.x > col[0]) {
-		this.x -= 101;
+	else if (direction === 'left' && this.x > col[1]) {
+		this.x -= colWidth;
 	}
-	else if (direction === 'right' && this.x < col[4]) {
-		this.x += 101;
+	else if (direction === 'right' && this.x < col[5]) {
+		this.x += colWidth;
 	}
 }
 
@@ -85,9 +96,10 @@ Player.prototype.handleInput = function(direction) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-
-var allEnemies = [new Enemy()];
+var allEnemies = [];
+for (i = 1; i <= 5; i++) {
+	allEnemies.push(new Enemy());
+}
 var player = new Player();
 
 // This listens for key presses and sends the keys to your

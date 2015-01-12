@@ -1,27 +1,23 @@
 /* Define Necessary Global variables and Constants
+ * includes Row and Column X,Y values.
  */
-	var rowHeight = 83;
-	var colWidth = 101;
-	var numEnemies = 5;
-	var buffer = 20; //Since the player is not as wide as the tile, we come in from both sides
- 
- //Define the Rows and Columns
-    var row = [];
-    var col = [];
-    for (i = 1; i <= 6; i++) {
-	    row[i] = -20 + (rowHeight * (i-1));
-    }
-    for (i = 0; i <= 6; i++) {
-	    col[i] = colWidth * (i-1);
-    }
+var rowHeight = 83;
+var colWidth = 101;
+var numEnemies = 5;
+var buffer = 20; //Since the player is not as wide as the tile, we come in from both sides
 
-//Return a random number between two values
-//Source: http://stackoverflow.com/questions/4959975/generate-random-value-between-two-numbers-in-javascript
-function randomIntFromInterval(min,max) {
-	return Math.floor(Math.random()*(max-min+1)+min);
+var row = [];
+var col = [];
+for (i = 1; i <= 6; i++) {
+    row[i] = -20 + (rowHeight * (i-1));
+}
+for (i = 0; i <= 6; i++) {
+    col[i] = colWidth * (i-1);
 }
 
-// Enemies our player must avoid
+
+
+// Enemies the player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -113,8 +109,6 @@ Player.prototype.handleInput = function(direction) {
 
 // Initialize the Player
 Player.prototype.init = function() {
-	//this.x = 404;
-	//this.y = -20;
 	this.x = col[randomIntFromInterval(1,5)];
     this.y = row[6];
 }

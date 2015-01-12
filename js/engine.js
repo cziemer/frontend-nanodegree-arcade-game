@@ -14,7 +14,16 @@
  * a little simpler to work with.
  */
 
- 
+
+/* Returns a random number between two values
+ * @param min the Lower bound number that can be returned
+ * @param max the Upper bound number that can be returned
+ * Source: http://stackoverflow.com/questions/4959975/generate-random-value-between-two-numbers-in-javascript
+ */
+function randomIntFromInterval(min,max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -120,7 +129,6 @@ var Engine = (function(global) {
         });
         player.update();
     }
-    
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every

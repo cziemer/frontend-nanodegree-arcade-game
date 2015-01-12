@@ -15,7 +15,14 @@ for (i = 0; i <= 6; i++) {
     col[i] = colWidth * (i-1);
 }
 
-
+/* Returns a random number between two values
+ * @param min the Lower bound number that can be returned
+ * @param max the Upper bound number that can be returned
+ * Source: http://stackoverflow.com/questions/4959975/generate-random-value-between-two-numbers-in-javascript
+ */
+function randomIntFromInterval(min,max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 // Enemies the player must avoid
 var Enemy = function() {
